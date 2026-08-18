@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Design tokens for the DMS platform.
+
+  Palette direction: a distribution/logistics ERP should read as precise,
+  trustworthy, and calm under load (dashboards get stared at all day) —
+  not playful, not generic SaaS-purple. Base is a cool slate neutral;
+  the single accent is a deep signal-blue ("route line" blue) reserved for
+  primary actions and active states. Status colors (success/warning/destructive)
+  are desaturated enough to sit quietly in dense tables.
+
+  All values are HSL components (no hsl() wrapper) so Tailwind's
+  `hsl(var(--token))` pattern in tailwind.config.js works directly, and
+  swapping the "dark" block is enough to re-theme the entire app.
+*/
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 227 72% 47%;
+    --primary-foreground: 210 20% 98%;
+
+    --secondary: 210 20% 94%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 20% 94%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 227 72% 96%;
+    --accent-foreground: 227 72% 30%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 20% 98%;
+
+    --success: 142 71% 35%;
+    --success-foreground: 210 20% 98%;
+
+    --warning: 38 92% 42%;
+    --warning-foreground: 210 20% 98%;
+
+    --border: 214 20% 89%;
+    --input: 214 20% 89%;
+    --ring: 227 72% 47%;
+
+    --sidebar-background: 222 47% 11%;
+    --sidebar-foreground: 210 20% 92%;
+    --sidebar-border: 222 30% 20%;
+
+    --radius: 0.625rem;
+  }
+
+  .dark {
+    --background: 222 47% 7%;
+    --foreground: 210 20% 96%;
+
+    --card: 222 40% 10%;
+    --card-foreground: 210 20% 96%;
+
+    --popover: 222 40% 10%;
+    --popover-foreground: 210 20% 96%;
+
+    --primary: 227 85% 63%;
+    --primary-foreground: 222 47% 7%;
+
+    --secondary: 222 30% 16%;
+    --secondary-foreground: 210 20% 96%;
+
+    --muted: 222 30% 16%;
+    --muted-foreground: 215 16% 65%;
+
+    --accent: 227 40% 20%;
+    --accent-foreground: 210 20% 96%;
+
+    --destructive: 0 63% 45%;
+    --destructive-foreground: 210 20% 96%;
+
+    --success: 142 60% 42%;
+    --success-foreground: 210 20% 96%;
+
+    --warning: 38 85% 50%;
+    --warning-foreground: 222 47% 7%;
+
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 227 85% 63%;
+
+    --sidebar-background: 222 47% 5%;
+    --sidebar-foreground: 210 20% 90%;
+    --sidebar-border: 222 30% 14%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* A themed text-selection color reads as more "designed" than the browser
+     default blue, which clashes with this palette in both light and dark mode. */
+  ::selection {
+    background-color: hsl(var(--primary) / 0.25);
+    color: hsl(var(--foreground));
+  }
+}
+
+/* Custom scrollbar — thin, themed, and only visible on hover in supporting
+   browsers. Purely cosmetic (native scrollbars still work everywhere; this
+   just avoids the default chunky OS scrollbar clashing with a dense
+   dashboard UI). Falls back silently on browsers without support. */
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 9999px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.4);
+  }
+}
+
+/* Print stylesheet — lets "Print report" (window.print()) on the Reports
+   page produce something worth handing to someone, instead of printing the
+   sidebar/topbar/buttons along with the data. Layout chrome hides itself via
+   Tailwind's `print:hidden` utility directly on Sidebar/Topbar/TabsList
+   rather than a CSS selector here, since that stays correct even if those
+   components' class names change later. */
+@media print {
+  body {
+    background: white !important;
+  }
+  main {
+    overflow: visible !important;
+  }
+}

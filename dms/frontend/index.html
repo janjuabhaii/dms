@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>DMS — Distribution Management System</title>
+    <meta name="description" content="Premium distribution management platform for sales teams, workers, and shop networks." />
+
+    <!-- Inline SVG favicon (brand mark: rounded square, primary blue, "D") —
+         no binary asset needed, and it scales cleanly for any icon size. -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232F4FE0'/%3E%3Ctext x='16' y='22' font-family='Arial, Helvetica, sans-serif' font-weight='700' font-size='17' fill='white' text-anchor='middle'%3ED%3C/text%3E%3C/svg%3E"
+    />
+
+    <!-- Tints the mobile browser chrome (address bar) to match the app,
+         with separate values for light/dark so it never looks out of place. -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafbfc" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1420" />
+
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("dms_theme");
+          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          if (stored === "dark" || (!stored && prefersDark)) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
